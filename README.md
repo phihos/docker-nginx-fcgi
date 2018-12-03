@@ -1,6 +1,6 @@
-# Docker Nginx web server for PHP-FPM
+# Nginx web server for PHP-FPM
 
-Configurable Nginx frontend for PHP-FPM.
+Docker image with a configurable Nginx frontend for PHP-FPM.
 
 ## Environment
 
