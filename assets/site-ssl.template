@@ -1,0 +1,23 @@
+server {
+    listen         443 ssl;
+    listen         [::]:443 ssl;
+    ssl_certificate     /etc/nginx/certs/cert.crt;
+    ssl_certificate_key /etc/nginx/certs/key.key;
+    root           ${WEB_ROOT};
+    index          index.html;
+
+    location / {
+        try_files $uri /${FCGI_FRONT_CONTROLLER}.php$is_args$args;
+    }
+
+    location ~ ^/${FCGI_FRONT_CONTROLLER}\.php(/|$) {
+        fastcgi_pass ${FCGI_PASS};
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+}

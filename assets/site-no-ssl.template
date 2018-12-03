@@ -1,0 +1,21 @@
+server {
+    listen         80 default_server;
+    listen         [::]:80 default_server;
+    root           ${WEB_ROOT};
+    index          index.html;
+
+    location / {
+        try_files $uri /${FCGI_FRONT_CONTROLLER}.php$is_args$args;
+    }
+
+    location ~ ^/${FCGI_FRONT_CONTROLLER}\.php(/|$) {
+        fastcgi_pass ${FCGI_PASS};
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+}
