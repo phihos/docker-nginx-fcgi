@@ -13,7 +13,7 @@ server {
     location ~ ^/${FCGI_FRONT_CONTROLLER}\.php(/|$) {
         fastcgi_pass ${FCGI_PASS};
         include         fastcgi_params;
-        fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        fastcgi_param   SCRIPT_FILENAME    $document_root/${FCGI_FRONT_CONTROLLER}.php;
         fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
     }
 
